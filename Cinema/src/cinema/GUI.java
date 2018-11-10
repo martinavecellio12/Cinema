@@ -1,5 +1,6 @@
 package cinema;
 
 public class GUI {
-	int i;	
+	int i;
+	int j;
 }
