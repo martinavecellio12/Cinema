@@ -3,14 +3,14 @@ package cinema;
 import java.io.*;
 import java.net.*;
 
-public class Teatro {
+public class Cinema {
 	
 	private ServerSocket server;
 	private Socket client;
 	private BufferedReader input;
 	private DataOutputStream output;
 	
-	public Teatro() throws IOException {
+	public Cinema() throws IOException {
 		System.out.println("SERVER: partito in esecuzione");
 		
 		server = new ServerSocket(6789);
@@ -123,7 +123,7 @@ public class Teatro {
     } 
 	
 	public static void main(String[] args) throws IOException {
-		Lotteria servente = new Lotteria();
+		Cinema servente = new Cinema();
 		while(true) {
 			servente.attendi();
 		}
