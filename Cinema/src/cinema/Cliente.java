@@ -8,12 +8,11 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class Cliente {
-	String nomeServer ="localhost";     // InetAddress.getLocalHost();
-    int portaServer = 6789;
-    Socket miosocket;
-	BufferedReader inDalServer;
-	String stringaRicevuta; //stringa ricevuta dal server
-	DataOutputStream outVersoServer;
+    Socket socket;
+	BufferedReader in;
+	DataOutputStream out;
+	int portaServer = 6789;
+	String messagge; //stringa ricevuta dal server
 	
 	public Cliente() {
 		//GUI interfaccia = new GUI(this);
@@ -23,12 +22,12 @@ public class Cliente {
 		System.out.println("2) CLIENT: partito in esecuzione ....");
 		try {	
 			// creo socket client 
-	    	miosocket = new Socket (nomeServer, portaServer);
+	    	socket = new Socket (nomeServer, portaServer);
 	    	// miosocket = new Socket (InetAddress.getLocalHost(), portaServer);
 	    	
 	    	// associo due oggetti al socket per scrittura e lettura
- 			outVersoServer = new DataOutputStream(miosocket.getOutputStream());
-	    	inDalServer = new BufferedReader(new InputStreamReader(miosocket.getInputStream()));
+ 			out = new DataOutputStream(socket.getOutputStream());
+	    	in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		}
 		catch (UnknownHostException e) {
 			System.out.println("Host sconosciuto");
@@ -38,7 +37,7 @@ public class Cliente {
 			System.out.println("Errore durante la connessione");
 			System.exit(1);
 		}
-		return miosocket;
+		return socket;
     }
     
     public String comunica(String s) {
@@ -48,25 +47,25 @@ public class Cliente {
 			
 			// Spedisco al server
 			System.out.println("5) CLIENT: ..... invio al server e attendo ....");
-			outVersoServer.writeBytes(s + "\n");
+			out.writeBytes(s + "\n");
 
 			// Leggo risposta del server
-			stringaRicevuta = inDalServer.readLine();
-			System.out.println("8) CLIENT: risposta dal server: "+stringaRicevuta);
+			messagge = in.readLine();
+			System.out.println("8) CLIENT: risposta dal server: "+messagge);
 		}
 		catch (Exception e) {
 			System.out.println(e.getMessage());
 			System.out.println("Errore durante la comunicazione del server");
 			System.exit(1);
 		}
-		return stringaRicevuta;
+		return messagge;
 	}
     
     public void chiusura() {
     	// Chiudo connessione sul server e chiudo server
     	System.out.println("9) CLIENT: elaborazione terminata e chiudo connessione");
     	try {
-			miosocket.close();
+			socket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
