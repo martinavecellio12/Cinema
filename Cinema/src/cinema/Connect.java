@@ -31,7 +31,7 @@ public class Connect extends Thread{
 	
 	public void run(){
 		try{
-			out.println("Generico messaggio per il Client");
+			System.out.println("Generico messaggio per il Client");
 			out.flush();
 			// chiude gli stream e le connessioni
 			out.close();
